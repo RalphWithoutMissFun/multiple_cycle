@@ -97,6 +97,7 @@ vector<int> convert_num(string str, int bytes, int zero_sign){
 				binary_display.push_back(num);
 			}
 		}
+
 		return binary_display;
 	}
     istringstream is(str);
@@ -128,7 +129,7 @@ vector<int> convert_num(string str, int bytes, int zero_sign){
     	back /= 2;
     //	cout << res[index] << endl;
     }
-    //reverse(res.begin(), res.end());
+    reverse(res.begin(), res.end());
     //cout << res.size() << endl;
 /*
     for (int index = 0 ; index < res.size() ; index++)
@@ -140,19 +141,20 @@ vector<int> convert_num(string str, int bytes, int zero_sign){
 }
 string pre_processing(string str){
 
-	string::size_type pos = 0;
+	  string::size_type pos = 0;
     pos=str.find(',', pos);
     while ((pos != string::npos))
     {
         str.replace(pos, 1, " ");
         pos=str.find(',', (pos+1));
     }
-
+    pos = 0;
     pos=str.find('(', pos);
     if ((pos != string::npos))
     {
         str.replace(pos, 1, " ");
     }
+    pos = 0;
     pos=str.find(')', pos);
 
     if ((pos != string::npos))
@@ -187,6 +189,11 @@ vector<int> parser(string str){
 		vector<int>frd = convert_opcode(rd,5);
 		vector<int>frs = convert_opcode(rs,5);
 		vector<int>frt = convert_opcode(rt,5);
+/*
+    print_vec2(frs);
+    print_vec2(frt);
+    print_vec2(frd);
+    cout << endl;*/
 		res.insert(res.end(), frs.begin(), frs.end());
 		res.insert(res.end(), frt.begin(), frt.end());
 		res.insert(res.end(), frd.begin(), frd.end());
@@ -201,6 +208,10 @@ vector<int> parser(string str){
 		vector<int> frs = convert_opcode(rs, 5);
 
 		vector<int> fimm = convert_num(imm, 16, 1);
+    /*print_vec2(frs);
+    print_vec2(frt);
+    print_vec2(fimm);
+    cout << endl;*/
 		//print_vec(fimm);
 		//print_vec(frt);
 		//print_vec(frs);
@@ -216,6 +227,11 @@ vector<int> parser(string str){
 		vector<int> frd = convert_opcode(rd, 5);
 		vector<int> frt = convert_opcode(rt, 5);
 		vector<int> fsa = convert_num(sa, 6, 0);
+/*
+    print_vec2(frt);
+    print_vec2(frd);
+    print_vec2(fsa);
+    cout << endl;*/
 		for (int index = 0 ; index < 5 ; index++)
 			res.push_back(0);
 		res.insert(res.end(), frt.begin(), frt.end());
@@ -229,6 +245,11 @@ vector<int> parser(string str){
 		vector<int> frs = convert_opcode(rs, 5);
 		vector<int> frt = convert_opcode(rt, 5);
 		vector<int> fimm = convert_num(imm, 16, 1);
+    /*
+    print_vec2(frs);
+    print_vec2(frt);
+    print_vec2(fimm);
+    cout << endl;*/
 		res.insert(res.end(), frs.begin(), frs.end());
 		res.insert(res.end(), frt.begin(), frt.end());
 		res.insert(res.end(), fimm.begin(), fimm.end());
@@ -238,6 +259,11 @@ vector<int> parser(string str){
         vector<int> frt = convert_opcode(rt, 5);
         vector<int> fimm = convert_num(imm, 16, 1);
         vector<int> frs = convert_opcode(rs, 5);
+        /*cout << rt << " " << imm << " -----" << rs << endl;
+        print_vec2(frs);
+        print_vec2(frt);
+        print_vec2(fimm);
+        cout << endl;*/
         res.insert(res.end(), frs.begin(), frs.end());
         res.insert(res.end(), frt.begin(), frt.end());
         res.insert(res.end(), fimm.begin(), fimm.end());
@@ -246,6 +272,9 @@ vector<int> parser(string str){
 		in >> rs >> imm;
 		vector<int> frs = convert_opcode(rs, 5);
 		vector<int> fimm = convert_num(imm, 16,1);
+    //print_vec2(frs);
+    //print_vec2(fimm);
+    //cout << endl;
 		res.insert(res.end(), frs.begin(), frs.end());
 		for (int index = 0 ; index < 5 ; index++)
 			res.push_back(0);
@@ -254,11 +283,15 @@ vector<int> parser(string str){
 	if (final_mode == 6){
 		in >> addr;
 		vector<int> faddr = convert_num(addr, 28, 1);
+    //print_vec2(faddr);
+    //cout << endl;
 		res.insert(res.end(), faddr.begin(), faddr.end());
 	}
 	if (final_mode == 7){
 		in >> rs;
 		vector<int> frs = convert_opcode(rs, 5);
+    //print_vec2(frs);
+    //cout << endl;
 		res.insert(res.end(), frs.begin(), frs.end());
 		for (int index = 0 ; index < 21 ; index++)
 			res.push_back(0);
@@ -273,13 +306,13 @@ vector<int> parser(string str){
 int main(){
 	initialize();
 	fstream file ;
-    file.open("data.txt");
-    for (int index = 0 ; index < 20 ; index++){
+  file.open("data.txt");
+  for (int index = 0 ; index < 20 ; index++){
     	string str;
     	getline(file, str);
     	//cout << str << endl;
     	//cout << pre_processing(str) << endl;
     	print_vec(parser(pre_processing(str)));
  	}
-    file.close();
+  file.close();
 }

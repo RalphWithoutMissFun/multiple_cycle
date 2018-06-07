@@ -1,0 +1,17 @@
+add  0
+sub  0
+or  0
+and  0
+slt  0 
+addi  1
+ori  1
+sltiu  1
+sll  2
+beq  3
+sw  4
+lw  4
+bltz  5
+j  6
+jal  6  
+jr  7 
+halt 8
